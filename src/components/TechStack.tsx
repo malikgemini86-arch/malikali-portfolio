@@ -60,6 +60,7 @@ const TechStack = () => {
       ) : (
         // Desktop: Full 3D Canvas
         <Canvas
+          key="tech-canvas"
           shadows={window.innerWidth >= 768}
           gl={{ 
             alpha: true, 
