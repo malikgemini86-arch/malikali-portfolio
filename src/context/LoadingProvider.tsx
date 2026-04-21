@@ -25,7 +25,14 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     setLoading,
   };
   useEffect(() => {
-    // This effect can be used for any loading-related side effects
+    // Safety timeout: If loading stays at 0% for more than 5 seconds, force site to show
+    const safetyTimeout = setTimeout(() => {
+      if (loading < 100) {
+        setLoading(100);
+      }
+    }, 5000);
+    
+    return () => clearTimeout(safetyTimeout);
   }, [loading]);
 
   return (
