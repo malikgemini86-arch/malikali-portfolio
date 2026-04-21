@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
+  Physics,
   RigidBody,
   CylinderCollider,
 } from "@react-three/rapier";
@@ -83,15 +84,17 @@ const TechStack = () => {
                 shadow-mapSize={[512, 512]}
               />
               <directionalLight position={[10, 10, 10]} intensity={3} />
-              <Pointer isActive={false} />
-              <Suspense fallback={null}>
-                <TechModels />
-              </Suspense>
-              {window.innerWidth > 768 && (
-                <EffectComposer>
-                  <N8AO aoRadius={6} intensity={2} />
-                </EffectComposer>
-              )}
+              <Physics gravity={[0, 0, 0]}>
+                <Pointer isActive={false} />
+                <Suspense fallback={null}>
+                  <TechModels />
+                </Suspense>
+                {window.innerWidth > 768 && (
+                  <EffectComposer>
+                    <N8AO aoRadius={6} intensity={2} />
+                  </EffectComposer>
+                )}
+              </Physics>
             </>
           )}
         </Canvas>
