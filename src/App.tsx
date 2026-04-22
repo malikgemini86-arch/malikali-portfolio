@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import "./App.css";
 
 const CharacterModel = lazy(() => import("./components/Character"));
@@ -6,17 +6,13 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const checkMobile = () => {
-      // Mobile detection logic moved to individual components
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   return (
@@ -43,28 +39,30 @@ const App = () => {
           </div>
         }>
           <MainContainer>
-            <Suspense fallback={
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
+            {isMobile ? null : (
+              <Suspense fallback={
                 <div style={{
-                  width: '30px',
-                  height: '30px',
-                  border: '2px solid #f3f3f3',
-                  borderTop: '2px solid #3498db',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite'
-                }}></div>
-              </div>
-            }>
-              <CharacterModel />
-            </Suspense>
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <div style={{
+                    width: '30px',
+                    height: '30px',
+                    border: '2px solid #f3f3f3',
+                    borderTop: '2px solid #3498db',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }}></div>
+                </div>
+              }>
+                <CharacterModel />
+              </Suspense>
+            )}
           </MainContainer>
         </Suspense>
       </LoadingProvider>
