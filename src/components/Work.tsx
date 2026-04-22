@@ -148,6 +148,18 @@ const Work = () => {
           ))}
         </div>
       </div>
+      <div className="bento-grid">
+        {bentoItems.map((item) => (
+          <div className="bento-card" key={item.id}>
+            <div className="bento-icon">{item.icon}</div>
+            <div className="bento-content">
+              <h3 className="bento-title">{item.title}</h3>
+              <p className="bento-description">{item.description}</p>
+              <span className="bento-category">{item.category}</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
