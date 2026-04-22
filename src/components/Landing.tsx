@@ -24,7 +24,9 @@ const Landing = ({ children }: PropsWithChildren) => {
             </div>
           </div>
         </div>
-        {children}
+        <div className="character-children block w-full min-h-[50vh] relative z-50">
+          {children}
+        </div>
       </div>
     </>
   );
