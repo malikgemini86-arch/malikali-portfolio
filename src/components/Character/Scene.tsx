@@ -16,6 +16,19 @@ const Scene = () => {
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
 
+  // Mobile bypass: Completely disable WebGL on mobile to prevent crashes
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  if (isMobile) {
+    return (
+      <div className="character-container">
+        <div className="character-model">
+          <div className="character-rim"></div>
+          <div className="character-hover"></div>
+        </div>
+      </div>
+    );
+  }
+
   const [character, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
     if (canvasDiv.current) {
