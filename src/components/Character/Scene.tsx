@@ -68,37 +68,31 @@ const Scene = () => {
           let character = gltf.scene;
           setChar(character);
           
-          // Mobile optimization: Use static image instead of 3D model
-          if (window.innerWidth < 768) {
-            // For mobile, create a simple static image instead of 3D model
-            const staticImage = document.createElement('img');
-            staticImage.src = '/images/character-static.png';
-            staticImage.style.position = 'absolute';
-            staticImage.style.top = '50%';
-            staticImage.style.left = '50%';
-            staticImage.style.transform = 'translate(-50%, -50%)';
-            staticImage.style.width = '200px';
-            staticImage.style.height = '200px';
-            staticImage.style.objectFit = 'contain';
-            staticImage.style.zIndex = '1';
-            canvasDiv.current?.appendChild(staticImage);
-            setChar(null); // No 3D character on mobile
-          } else {
-            // Desktop: Full 3D model
-            scene.add(character);
-            headBone = character.getObjectByName("spine006") || null;
-            screenLight = character.getObjectByName("screenlight") || null;
-            
-            // Start animations after character loads, regardless of loading state
-            setTimeout(() => {
-              light.turnOnLights();
-              animations.startIntro();
-            }, 2500);
-            
-            window.addEventListener("resize", () =>
-              handleResize(renderer, camera, canvasDiv, character)
-            );
+          // Add character to scene for both mobile and desktop
+          scene.add(character);
+          
+          // Mobile-specific scaling and positioning
+          if (isMobile) {
+            character.scale.set(3, 3, 3);
+            character.position.set(0, -1, 0);
           }
+          
+          headBone = character.getObjectByName("spine006") || null;
+          screenLight = character.getObjectByName("screenlight") || null;
+          
+          // Add ambient light for visibility
+          const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+          scene.add(ambientLight);
+          
+          // Start animations after character loads, regardless of loading state
+          setTimeout(() => {
+            light.turnOnLights();
+            animations.startIntro();
+          }, 2500);
+          
+          window.addEventListener("resize", () =>
+            handleResize(renderer, camera, canvasDiv, character)
+          );
         }
       });
 
