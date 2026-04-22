@@ -18,6 +18,7 @@ export const LoadingContext = createContext<LoadingType | null>(null);
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(0);
+  const [forceClose, setForceClose] = useState(false);
 
   const value = {
     isLoading,
@@ -36,9 +37,19 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     return () => clearTimeout(safetyTimeout);
   }, [loading]);
 
+  // NUCLEAR OPTION: Independent timeout that completely ignores progress
+  useEffect(() => {
+    const nuclearTimeout = setTimeout(() => {
+      setForceClose(true);
+      setIsLoading(false);
+    }, 3000);
+    
+    return () => clearTimeout(nuclearTimeout);
+  }, []); // Empty dependency array - runs once and never depends on progress
+
   return (
     <LoadingContext.Provider value={value as LoadingType}>
-      {isLoading && <Loading percent={loading} />}
+      {!forceClose && isLoading && <Loading percent={loading} />}
       <main className="main-body">{children}</main>
     </LoadingContext.Provider>
   );
