@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
@@ -11,7 +11,7 @@ import Work from "./Work";
 import setSplitText from "./utils/splitText";
 import TechStack from "./TechStack";
 
-const MainContainer = ({ children }: PropsWithChildren) => {
+const MainContainer = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
 
   useEffect(() => {
@@ -31,11 +31,10 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Cursor />
       <Navbar />
       <SocialIcons />
-      {children}
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className="container-main">
-            <Landing>{children}</Landing>
+            <Landing />
             <About />
             <WhatIDo />
             <Career />

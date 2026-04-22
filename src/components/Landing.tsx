@@ -1,7 +1,59 @@
-import { PropsWithChildren } from "react";
+import { useEffect } from "react";
+import { gsap } from "gsap";
 import "./styles/Landing.css";
 
-const Landing = ({ children }: PropsWithChildren) => {
+const Landing = () => {
+  useEffect(() => {
+    // Name entrance animation with stagger
+    gsap.fromTo(
+      ".landing-intro h2",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.05
+      }
+    );
+
+    gsap.fromTo(
+      ".landing-intro h1",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.1
+      }
+    );
+
+    gsap.fromTo(
+      ".landing-info h3",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power1.out",
+        delay: 0.3
+      }
+    );
+
+    gsap.fromTo(
+      ".landing-title-word",
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.05
+      }
+    );
+  }, []);
+
   return (
     <>
       <div className="landing-section" id="landingDiv">
@@ -23,9 +75,6 @@ const Landing = ({ children }: PropsWithChildren) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="character-children block w-full min-h-[50vh] relative z-50">
-          {children}
         </div>
       </div>
     </>
