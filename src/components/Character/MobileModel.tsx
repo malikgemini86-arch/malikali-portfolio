@@ -26,7 +26,7 @@ function DiagnosticCube() {
 
 const MobileModel = () => {
   return (
-    <div className="character-container" style={{ zIndex: 50 }}>
+    <div className="character-container block w-full h-[400px] min-h-[400px] bg-red-900 z-50 relative" style={{ zIndex: 50 }}>
       <div className="character-model">
         <Canvas 
           camera={{ position: [0, 0, 5], fov: 50 }}
