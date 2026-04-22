@@ -20,6 +20,12 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(0);
   const [forceClose, setForceClose] = useState(false);
 
+  // Mobile bypass: Completely disable loader on mobile to prevent 3D crashes
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  if (isMobile) {
+    return <>{children}</>;
+  }
+
   const value = {
     isLoading,
     setIsLoading,
