@@ -67,16 +67,21 @@ const MobileModel = () => {
           // Add character to scene with mobile-specific scaling
           scene.add(character);
           
-          // Mobile-specific scaling and positioning
-          character.scale.set(3, 3, 3);
-          character.position.set(0, -1, 0);
+          // Mobile-specific scaling and positioning - very large scale for visibility
+          character.scale.set(5, 5, 5);
+          character.position.set(0, -2, 0);
           
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
           
-          // Add ambient light for visibility
+          // Add strong ambient light for visibility
           const ambientLight = new THREE.AmbientLight(0xffffff, 2);
           scene.add(ambientLight);
+          
+          // Add directional light for better visibility
+          const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+          directionalLight.position.set(0, 5, 5);
+          scene.add(directionalLight);
           
           // Start animations after character loads
           setTimeout(() => {

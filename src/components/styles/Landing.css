@@ -265,6 +265,11 @@
 @media screen and (max-width: 768px) {
   .character-model {
     z-index: 5;
+    height: 50vh;
+    min-height: 400px;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   .landing-info h3 {
     font-size: 18px;
