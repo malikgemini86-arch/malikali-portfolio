@@ -47,8 +47,20 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     return () => clearTimeout(nuclearTimeout);
   }, []); // Empty dependency array - runs once and never depends on progress
 
-  // VANILLA JS FORCEFUL REMOVAL: Bypass React state system
+  // PURE CSS GPU-ACCELERATED REMOVAL: Inject CSS animation directly
   useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes killLoader {
+        0%, 99% { opacity: 1; visibility: visible; z-index: 9999; }
+        100% { opacity: 0; visibility: hidden; z-index: -9999; display: none; }
+      }
+      #global-loader {
+        animation: killLoader 3.5s forwards;
+      }
+    `;
+    document.head.appendChild(style);
+    
     const vanillaTimeout = setTimeout(() => {
       const loader = document.getElementById('global-loader');
       if (loader) {
