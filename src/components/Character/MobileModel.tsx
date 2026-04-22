@@ -42,10 +42,8 @@ const MobileModel = () => {
       
       canvasDiv.current.appendChild(renderer.domElement);
 
-      const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
-      camera.position.z = 10;
-      camera.position.set(0, 13.1, 24.7);
-      camera.zoom = 1.1;
+      const camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
+      camera.position.set(0, 0, 5);
       camera.updateProjectionMatrix();
 
       let headBone: THREE.Object3D | null = null;
@@ -64,12 +62,12 @@ const MobileModel = () => {
           let character = gltf.scene;
           setChar(character);
           
-          // Add character to scene with mobile-specific scaling
+          // Add character to scene with normal scale and position
           scene.add(character);
           
-          // Mobile-specific scaling and positioning - very large scale for visibility
-          character.scale.set(5, 5, 5);
-          character.position.set(0, -2, 0);
+          // Normal scale and position for proper centering
+          character.scale.set(1, 1, 1);
+          character.position.set(0, 0, 0);
           
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
@@ -159,7 +157,7 @@ const MobileModel = () => {
 
   return (
     <>
-      <div className="character-container">
+      <div className="character-container" style={{ zIndex: 50 }}>
         <div className="character-model" ref={canvasDiv}>
           <div className="character-rim"></div>
           <div className="character-hover" ref={hoverDivRef}></div>
