@@ -16,19 +16,6 @@ const Scene = () => {
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
 
-  // Mobile bypass: Completely disable WebGL on mobile to prevent crashes
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  if (isMobile) {
-    return (
-      <div className="character-container">
-        <div className="character-model">
-          <div className="character-rim"></div>
-          <div className="character-hover"></div>
-        </div>
-      </div>
-    );
-  }
-
   const [character, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
     if (canvasDiv.current) {
@@ -41,21 +28,20 @@ const Scene = () => {
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: !isMobile,
+        powerPreference: isMobile ? "low-power" : "high-performance",
       });
       
-      // Optimize shadows for mobile
+      // Mobile optimizations
       if (isMobile) {
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.2));
         renderer.shadowMap.enabled = false;
+      } else {
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       }
+      
       renderer.setSize(container.width, container.height);
-      renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
-      
-      // Optimize shadows for mobile
-      if (isMobile) {
-        renderer.shadowMap.enabled = false;
-      }
       canvasDiv.current.appendChild(renderer.domElement);
 
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
