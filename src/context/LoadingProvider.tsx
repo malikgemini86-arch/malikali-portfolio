@@ -25,10 +25,12 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     setLoading,
   };
   useEffect(() => {
-    // Extremely strict safety timeout: Force complete in 3 seconds regardless of progress
+    // Strict safety timeout: Force complete in 3 seconds if stuck at 0%
     const safetyTimeout = setTimeout(() => {
-      setLoading(100);
-      setIsLoading(false);
+      if (loading < 100) {
+        setLoading(100);
+        setIsLoading(false);
+      }
     }, 3000);
     
     return () => clearTimeout(safetyTimeout);
