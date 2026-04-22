@@ -47,6 +47,18 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     return () => clearTimeout(nuclearTimeout);
   }, []); // Empty dependency array - runs once and never depends on progress
 
+  // VANILLA JS FORCEFUL REMOVAL: Bypass React state system
+  useEffect(() => {
+    const vanillaTimeout = setTimeout(() => {
+      const loader = document.getElementById('global-loader');
+      if (loader) {
+        loader.style.display = 'none';
+      }
+    }, 3500);
+    
+    return () => clearTimeout(vanillaTimeout);
+  }, []); // Empty dependency array - runs once and never depends on progress
+
   return (
     <LoadingContext.Provider value={value as LoadingType}>
       {!forceClose && isLoading && <Loading percent={loading} />}

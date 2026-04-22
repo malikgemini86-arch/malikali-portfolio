@@ -92,7 +92,7 @@ const Loading = ({ percent }: { percent: number }) => {
 
   return (
     <>
-      <div className="loading-header">
+      <div id="global-loader" className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
           MALIK ALI
         </a>
