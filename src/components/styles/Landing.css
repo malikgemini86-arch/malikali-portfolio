@@ -279,20 +279,38 @@
     line-height: 30px;
     padding: 0 20px;
   }
-  .landing-intro {
-    top: 40%;
-    left: 20px;
-    right: auto;
-    transform: translate(0%, -50%);
+  .landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    gap: 20px;
   }
-
-  .landing-info {
-    bottom: auto;
-    top: 60%;
-    z-index: inherit;
+  .landing-intro {
+    position: relative;
+    top: auto;
+    left: auto;
     right: auto;
-    left: 20px;
-    transform: translate(0%, -50%);
+    transform: none;
+    order: 1;
+  }
+  .landing-info {
+    position: relative;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    order: 2;
+    text-align: center;
+  }
+  .landing-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 }
 @media screen and (min-width: 1025px) {
