@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 
 const CharacterModel = lazy(() => import("./components/Character"));
@@ -6,11 +6,9 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      // Mobile detection logic moved to individual components
     };
     
     checkMobile();
@@ -24,9 +22,9 @@ const App = () => {
   return (
     <>
       <LoadingProvider>
-        <Suspense>
+        <Suspense fallback={<div>Loading UI...</div>}>
           <MainContainer>
-            <Suspense>
+            <Suspense fallback={<div>Loading Character...</div>}>
               <CharacterModel />
             </Suspense>
           </MainContainer>
